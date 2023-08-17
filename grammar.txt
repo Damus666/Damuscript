@@ -1,10 +1,20 @@
 statements: statement (0 or more)
 
-statement: expression | return
+statement: expression | return | if | for | while | repeat | "stop" | "skip" | use
+
+use: "use" NAME
+
+if: "if" expression { statements } "else"? statement
+
+for: "for" NAME "in" expression { statements }
+
+while: "while" expression { statements }
+
+repeat: "repeat" NAME = expression ("to" expression)? ("step" expression)? { statements }
 
 return: "ret" expression
 
-expression: logic_expression
+expression: logic_expression ("if" expression "else" expression)?
 
 logic_expression: not_expression | & ? not_expression
 
@@ -25,6 +35,7 @@ extra_factor: factor |
 
 factor : INT|FLOAT|STRING |
          [ expression,... ] |
+         [ "for" NAME "in" expression: expression] |
          { NAME = expression; ... } |
          fun NAME (maybe) (NAME, ...) { statements } |
          ( expression ) |
