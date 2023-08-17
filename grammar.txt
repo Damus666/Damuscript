@@ -1,0 +1,33 @@
+statements: statement (0 or more)
+
+statement: expression | return
+
+return: "ret" expression
+
+expression: logic_expression
+
+logic_expression: not_expression | & ? not_expression
+
+not_expression: ! bool_expression | bool_expression
+
+bool_expression: arith_expression == > < >= <= arith_expression
+
+arith_expression: term + - term
+
+term: extra_factor * / ^ extra_factor
+
+extra_factor: factor |
+              factor . NAME (1 or more)
+              factor . NAME = expression
+              factor [ expression ] (1 or more)
+              factor [ expression ] = expression
+              factor ( expression,... ) (1 or more)
+
+factor : INT|FLOAT|STRING |
+         [ expression,... ] |
+         { NAME = expression; ... } |
+         fun NAME (maybe) (NAME, ...) { statements } |
+         ( expression ) |
+         NAME |
+         NAME = expression |
+         - + expression

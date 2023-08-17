@@ -1,0 +1,18 @@
+use random;
+
+while true {
+    want_to_play = input("Do you want to play? ");
+    if want_to_play.lower() == "no" {
+        exit("Kk bye");
+    }
+    chosen = randint(0,10);
+    selected = input("Make your guess: ");
+    if !selected.isdecimal() {
+        exit("Input a number next time");
+    }
+    if toint(selected) == chosen {
+        print("You were right! No prize tho");
+    } else {
+        print("Wrong guess! The number was "+tostring(chosen));
+    }
+}
